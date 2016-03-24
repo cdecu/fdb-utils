@@ -11,6 +11,7 @@
 import argparse
 import logging
 import re
+import fdb
 
 #from fdbutils import Table, dialect_names
 
