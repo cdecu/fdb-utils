@@ -1,0 +1,2 @@
+# just call source startVirtEnv
+source ~/py35-testenv/bin/activate
