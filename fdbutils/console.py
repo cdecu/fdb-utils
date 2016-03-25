@@ -8,12 +8,12 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 1992-2016, Carlos de Cumont <carlos@decumont.be>
 
-import os, argparse, logging, re
-import fdb
-
+import os, argparse, logging
+# import re
+# import fdb
 #from fdbutils import Table, dialect_names
 
-fdb_descr="""
+fdb_descr = """
 Firebird utility command
 """
 
@@ -31,13 +31,13 @@ parser.add_argument('--pwd', help='User Password', type=str, default=os.getenv("
 parser.add_argument('--db', help='Database', type=str, default=os.getenv("isc_database", "/srv/firebird/employee.fdb"))
 parser.add_argument('--show', nargs="*", metavar="x", help="tables views procedures OneTable ...")
 parser.add_argument('--drop', nargs="*", metavar="x", help="tables views procedures OneTable ...")
-parser.add_argument('-l', '--log', type=str.upper, help='log level (CRITICAL, FATAL, ERROR, DEBUG, INFO, WARN)',default='WARN')
+parser.add_argument('-l', '--log', type=str.upper, help='log level (CRITICAL, FATAL, ERROR, DEBUG, INFO, WARN)', default='WARN')
 
 
 def set_logging(args):
     try:
         loglevel = int(getattr(logging, args.log))
-    except (AttributeError, TypeError) as e:
+    except (AttributeError, TypeError):
         raise NotImplementedError('log level "%s" not one of CRITICAL, FATAL, ERROR, DEBUG, INFO, WARN' % args.log)
     logging.getLogger().setLevel(loglevel)
 
@@ -46,9 +46,8 @@ def ArgumentParser(args) -> str:
     set_logging(args)
     logging.info(str(args))
     if args.show:
-        print("show",args.show)
+        print("show", args.show)
         return "show"
-    parser.print_help()
     return ""
 
 
@@ -66,7 +65,8 @@ def show(items:list) -> object:
     print(items)
     pass
 
-def drop(items:list) -> object:
+
+def drop(items: list) -> object:
     # class CustomDict(dict):
     #     def __getattr__(self, name):
     #         return self[name]
@@ -80,12 +80,18 @@ def drop(items:list) -> object:
     print(items)
     pass
 
-if __name__ == '__main__':
-    args = parser.parse_args()
-    action=ArgumentParser(args)
+
+def generate(args=None):
+    if not args:
+        args = parser.parse_args()
+    action = ArgumentParser(args)
     if action == "show":
         exit(show(args.show))
     elif action == "drop":
         exit(drop(args.show))
     else:
+        parser.print_help()
         exit(-1)
+
+if __name__ == '__main__':
+    generate()
