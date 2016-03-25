@@ -12,7 +12,6 @@
 Given data, automatically guess-generates DDL to create SQL tables.
 """
 
-import doctest
-
 if __name__ == '__main__':
+    import doctest
     doctest.testmod(optionflags=doctest.NORMALIZE_WHITESPACE)
