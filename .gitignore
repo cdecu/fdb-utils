@@ -13,6 +13,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+.directory
 .Python
 env/
 bin/
@@ -62,6 +63,5 @@ docs/_build/
 
 # IntelliJ project files
 .idea
-*.iml
 out
 gen
